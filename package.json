@@ -1,0 +1,32 @@
+{
+  "name": "HMS-Individual-API-Project",
+  "version": "1.0.0",
+  "description": "tugas individu HMS API",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "build": "node src/index.js"
+  },
+  "author": "Yusuf Trihartono",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-airbnb-base": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-prettier": "latest",
+    "nodemon": "latest"
+  },
+  "dependencies": {
+    "bcrypt": "latest",
+    "cookie-parser": "^1.4.6",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "imagekit": "latest",
+    "jsonwebtoken": "latest",
+    "multer": "latest",
+    "mysql2": "latest"
+  }
+}
