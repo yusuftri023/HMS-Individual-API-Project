@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 const { JWT_SECRET_KEY } = process.env;
 
 export const JWTsign = async (userData) => {
-  let token = jwt.sign(userData, JWT_SECRET_KEY, { expiresIn: 60 * 60 });
+  // ganti masa berlaku token untuk testing
+  const token = jwt.sign(userData, JWT_SECRET_KEY, { expiresIn: 60 * 1 });
   return token;
 };
 

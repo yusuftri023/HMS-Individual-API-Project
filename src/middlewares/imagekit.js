@@ -1,5 +1,6 @@
 import ImageKit from "imagekit";
 import "dotenv/config";
+import sharp from "sharp";
 const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_SECRET_KEY, IMAGEKIT_URL_ENDPOINT } =
   process.env;
 const imagekit = new ImageKit({
@@ -10,21 +11,26 @@ const imagekit = new ImageKit({
 
 export const imagekitUpload = async (req, res, next) => {
   try {
-    const stringFile = req.file.buffer.toString("base64");
+    const resizeImage = await sharp(req.file.buffer)
+      .resize(400)
+      .jpeg({ mozjpeg: true })
+      .toBuffer();
+    const stringFile = resizeImage.toString("base64");
     const date = new Date();
-    const dateString = Intl.DateTimeFormat("sv-SE");
-    const formattedTime = dateString.format(date);
+    const formattedTime = Intl.DateTimeFormat("sv-SE").format(date);
     const currentTime = date.getTime();
+    console.time("uploading to imagekit");
     await imagekit.createFolder({
       folderName: `${formattedTime}`,
       parentFolderPath: "/HMS-Nodejs/profile-picture",
     });
 
-    const uploadImage = imagekit.upload({
-      fileName: `${currentTime}.png`,
+    const uploadImage = await imagekit.upload({
+      fileName: `${currentTime}.jpeg`,
       file: stringFile,
-      folder: "/HMS-Nodejs/profile-picture",
+      folder: `/HMS-Nodejs/profile-picture/${formattedTime}`,
     });
+    console.timeEnd("uploading to imagekit");
     req.uploadImage = uploadImage;
     next();
   } catch (error) {

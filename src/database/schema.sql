@@ -169,4 +169,4 @@ delimiter ;
 
 CREATE TRIGGER `payment_exp` BEFORE INSERT ON payment
     FOR EACH ROW
-    SET NEW.last_payment_date =  DATE_ADD (CURRENT_TIMESTAMP(),INTERVAL 2 DAY)
+    SET NEW.last_payment_date =  DATE_ADD(CURRENT_TIMESTAMP(),INTERVAL 2 DAY)
