@@ -14,7 +14,7 @@ export const auth = async (req, res, next) => {
     return res.status(401).json({
       success: false,
       message:
-        "No authorization headers, you're not authorized to access this page!",
+        "No authorization cookies detected, you're not authorized to access this page!",
       data: null,
     });
   }

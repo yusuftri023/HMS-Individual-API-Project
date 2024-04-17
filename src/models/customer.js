@@ -31,7 +31,7 @@ export const updatePassword = async (password, email) => {
   const mysqlConnection = await pool.getConnection();
   const [result] = await mysqlConnection.query(
     `UPDATE customer
-        SET picture = ?
+        SET password = ? , last_password_update = current_timestamp()
         WHERE email = ?`,
     [password, email]
   );

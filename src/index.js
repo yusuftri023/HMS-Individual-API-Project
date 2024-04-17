@@ -15,11 +15,7 @@ const options = {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const corsOptions = {
-  origin: "127.0.0.1",
-  credentials: true,
-};
-app.use(cors(corsOptions));
+app.use(cors({ origin: "https://127.0.0.1:8080" }));
 app.use(cookieParser(SIGNED_COOKIE_SECRET));
 app.use(logger);
 app.use("/", router);

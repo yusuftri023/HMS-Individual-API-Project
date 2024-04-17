@@ -144,16 +144,16 @@ export const changePicture = async (req, res) => {
   }
 };
 export const changepassword = async (req, res) => {
-  console.log(req.decodedToken);
   const { id: idToken, email: emailToken } = req.decodedToken;
   const { password } = req.body;
   const { id } = req.params;
   const data = await userData(emailToken);
+
   if (Number(id) === Number(idToken) && data) {
     const isMatched = await checkPassword(password, data.password);
     if (!isMatched) {
       const hashedPassword = await hashPassword(password);
-      const result = await updatePassword(hashedPassword, emailToken);
+      const result = await updatePassword(hashedPassword, data.email);
       return res.status(201).json({
         success: true,
         message: "Password updated successfully",

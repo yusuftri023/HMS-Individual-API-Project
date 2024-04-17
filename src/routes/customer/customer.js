@@ -10,13 +10,13 @@ import { imagekitUpload } from "../../middlewares/imagekit.js";
 const router = express.Router();
 
 router.get("/:id", customer);
-router.put(
+router.patch(
   "/:id/changepicture",
   imageUpload.single("image"),
   imagekitUpload,
   changePicture
 );
-router.put("/:id/changepassword", changepassword);
+router.patch("/:id/changepassword", changepassword);
 router.delete("/:id", deleteCustomer);
 
 export default router;
