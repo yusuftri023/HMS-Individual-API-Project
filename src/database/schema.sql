@@ -4,7 +4,7 @@ CREATE TABLE customer(
     email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     picture VARCHAR(500) NOT NULL ,
-    phone_number varchar(20),
+    phone_number varchar(20) NOT NULL,
     last_password_update timestamp(0) not null default now(),
     PRIMARY KEY(id)
 );

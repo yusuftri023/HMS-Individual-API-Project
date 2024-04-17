@@ -1,13 +1,28 @@
 import { pool } from "../database/config.js";
 
-export const insertCustomer = async (username, email, password) => {
+export const userData = async (email) => {
+  const mysqlConnection = pool.getConnection();
+  const [result] = await mysqlConnection.query(
+    `SELECT * FROM customer
+        WHERE email LIKE ?`,
+    [email]
+  );
+  mysqlConnection.release();
+  return result;
+};
+export const insertCustomer = async (
+  username,
+  email,
+  phone_number,
+  password
+) => {
   const defaultPicture =
     "https://ik.imagekit.io/neuros123/default-profile-pic.png";
   const mysqlConnection = pool.getConnection();
   const [result] = await mysqlConnection.query(
-    `INSERT INTO customer(username, email, password, picture)
+    `INSERT INTO customer(username, email, phone_number,password, picture)
         VALUES(?,?,?,?,)`,
-    [username, email, password, defaultPicture]
+    [username, email, phone_number, password, defaultPicture]
   );
   mysqlConnection.release();
   return result;
