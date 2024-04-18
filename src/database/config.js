@@ -1,6 +1,5 @@
 import "dotenv/config";
 import mysql from "mysql2/promise";
-
 const {
   DATABASE_HOST,
   DATABASE_USER,
@@ -8,6 +7,22 @@ const {
   DATABASE_PASSWORD,
   DATABASE_PORT,
 } = process.env;
+
+import knex from "knex";
+export const knexConnection = knex({
+  client: "mysql2",
+  connection: {
+    host: DATABASE_HOST,
+    port: DATABASE_PORT,
+    user: DATABASE_USER,
+    password: DATABASE_PASSWORD,
+    database: DATABASE_NAME,
+  },
+  pool: { min: 0, max: 10 },
+});
+knexConnection
+  .raw("select 1")
+  .then((res) => console.log("connected to database", res[1][0]));
 export const pool = mysql.createPool({
   host: DATABASE_HOST,
   user: DATABASE_USER,

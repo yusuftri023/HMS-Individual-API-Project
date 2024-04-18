@@ -12,36 +12,42 @@ const { SIGNED_COOKIE_SECRET } = process.env;
 
 export const register = async (req, res) => {
   const { username, email, phone_number, password } = req.body;
-  if (username && email && password && phone_number) {
-    const exist = (await userData(email)) ? true : false;
+  try {
+    if (username && email && password && phone_number) {
+      const exist = (await userData(email)) ? true : false;
 
-    if (exist) {
-      const hashedPassword = await hashPassword(password);
-      const result = await insertCustomer(
-        username,
-        email,
-        phone_number,
-        hashedPassword
-      );
-      return res.status(201).json({
-        success: true,
-        message: "Account successfully created",
-        data: {
-          result,
-        },
-      });
+      if (exist) {
+        const hashedPassword = await hashPassword(password);
+        const result = await insertCustomer(
+          username,
+          email,
+          phone_number,
+          hashedPassword
+        );
+        return res.status(201).json({
+          success: true,
+          message: "Account successfully created",
+          data: {
+            result,
+          },
+        });
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Email already exist",
+          data: null,
+        });
+      }
     } else {
       return res.status(400).json({
         success: false,
-        message: "Email already exist",
+        message: "Request is not complete ",
         data: null,
       });
     }
-  } else {
-    return res.status(400).json({
-      success: false,
-      message: "Request is not complete ",
-      data: null,
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
     });
   }
 };
@@ -167,11 +173,19 @@ export const changepassword = async (req, res) => {
       });
     }
   } else {
-    return res.status(404).json({
-      success: false,
-      message: "Customer does not exist",
-      data: null,
-    });
+    if (Number(id) !== Number(idToken)) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad request id",
+        data: null,
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Customer does not exist",
+        data: null,
+      });
+    }
   }
 };
 

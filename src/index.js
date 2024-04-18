@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cors({ origin: "https://127.0.0.1:8080" }));
 app.use(cookieParser(SIGNED_COOKIE_SECRET));
 app.use(logger);
-app.use("/", router);
+// app.use("/", router);
 app.get("/", (req, res) => {
   res.json({
     status: "success",
